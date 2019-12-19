@@ -32,7 +32,7 @@ public class UserController {
             String userId = userService.createUser(context);
 
             if (userId == null)
-                ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+                return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
 
             return ResponseEntity.created(URI.create("http://127.0.0.1:8080/users/" + userId)).build();
 
@@ -42,29 +42,30 @@ public class UserController {
     }
 
     @GetMapping("/users/count")
-    public ResponseEntity<?> getUsersCount() {
+    public ResponseEntity<?> getUsersCount(
+            @RequestParam(value = "lessThanAge", required = false, defaultValue = "-1") int lessThanAge) {
 
-        UserCountResponseDto userCount = userService.userCount();
+        UserCountResponseDto userCount = lessThanAge == -1 ? userService.userCount() : userService.userCount(lessThanAge);
 
         if (userCount == null)
-            ResponseEntity.noContent().build();
+            return ResponseEntity.noContent().build();
 
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(userCount);
     }
 
     @GetMapping("/users")
-    public ResponseEntity<?> getAllUsers() {
+    public ResponseEntity<?> getAllUsers(@RequestParam(value = "petName", required = false) String petName) {
 
-        Collection<UserDto> users = userService.getUsers();
+        Collection<UserDto> users = petName == null ? userService.getUsers() : userService.getUsersByPet(petName);
 
-        if (users == null)
-            ResponseEntity.noContent().build();
+        if (users == null || users.isEmpty())
+            return ResponseEntity.noContent().build();
 
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(users);
     }
 
     @GetMapping("/users/{userId}")
-    public ResponseEntity<?> getAllUsers(@PathVariable("userId") String userId) {
+    public ResponseEntity<?> getAllUsersById(@PathVariable("userId") String userId) {
 
         try {
 
@@ -91,7 +92,7 @@ public class UserController {
             boolean wasSuccessful = userService.updateUser(userId, context);
 
             if (!wasSuccessful)
-                ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+                return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
 
             return ResponseEntity.ok().build();
 
@@ -108,7 +109,7 @@ public class UserController {
             boolean wasSuccessful = userService.deleteUser(userId);
 
             if (!wasSuccessful)
-                ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+                return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
 
             return ResponseEntity.ok().build();
 

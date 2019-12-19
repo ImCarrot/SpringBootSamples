@@ -5,12 +5,14 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+
 @Repository
 public interface UserRepository extends CrudRepository<UserDao, String> {
 
-    @Query("{age: {$lte: ?0}}")
-    UserDao fetchUsersOfLessAge(int age);
+    @Query(value = "{age: {$lte: ?0}}", count = true)
+    long fetchUsersOfLessAge(int age);
 
-    UserDao findByPetName(String petName);
+    Collection<UserDao> findByPets(String petName);
 
 }

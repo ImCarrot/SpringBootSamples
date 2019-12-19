@@ -12,9 +12,13 @@ public interface UserService {
 
     UserCountResponseDto userCount();
 
+    UserCountResponseDto userCount(int lessThanAge);
+
     Collection<UserDto> getUsers();
 
     UserDto getUsers(String userId) throws ServiceClientException;
+
+    Collection<UserDto> getUsersByPet(String petName);
 
     boolean updateUser(String userId, UserDto context) throws ServiceClientException;
 

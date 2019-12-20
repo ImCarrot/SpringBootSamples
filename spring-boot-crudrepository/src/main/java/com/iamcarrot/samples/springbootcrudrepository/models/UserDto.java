@@ -1,4 +1,4 @@
-package com.carrot.samples.springbootcrudrepository.models;
+package com.iamcarrot.samples.springbootcrudrepository.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

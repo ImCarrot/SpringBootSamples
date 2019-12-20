@@ -1,8 +1,8 @@
-package com.carrot.samples.springbootcrudrepository.services;
+package com.iamcarrot.samples.springbootcrudrepository.services;
 
-import com.carrot.samples.springbootcrudrepository.exceptions.ServiceClientException;
-import com.carrot.samples.springbootcrudrepository.models.UserCountResponseDto;
-import com.carrot.samples.springbootcrudrepository.models.UserDto;
+import com.iamcarrot.samples.springbootcrudrepository.exceptions.ServiceClientException;
+import com.iamcarrot.samples.springbootcrudrepository.models.UserCountResponseDto;
+import com.iamcarrot.samples.springbootcrudrepository.models.UserDto;
 
 import java.util.Collection;
 

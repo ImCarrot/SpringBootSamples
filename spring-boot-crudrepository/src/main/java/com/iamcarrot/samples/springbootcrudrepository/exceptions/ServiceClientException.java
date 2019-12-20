@@ -1,4 +1,4 @@
-package com.carrot.samples.springbootcrudrepository.exceptions;
+package com.iamcarrot.samples.springbootcrudrepository.exceptions;
 
 public class ServiceClientException extends Exception {
 

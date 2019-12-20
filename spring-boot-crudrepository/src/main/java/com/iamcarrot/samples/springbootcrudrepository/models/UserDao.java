@@ -1,4 +1,4 @@
-package com.carrot.samples.springbootcrudrepository.models;
+package com.iamcarrot.samples.springbootcrudrepository.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

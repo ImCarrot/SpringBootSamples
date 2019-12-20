@@ -1,6 +1,6 @@
-package com.carrot.samples.springbootcrudrepository.repository;
+package com.iamcarrot.samples.springbootcrudrepository.repository;
 
-import com.carrot.samples.springbootcrudrepository.models.UserDao;
+import com.iamcarrot.samples.springbootcrudrepository.models.UserDao;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

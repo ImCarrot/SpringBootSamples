@@ -1,10 +1,10 @@
-package com.carrot.samples.springbootcrudrepository.services;
+package com.iamcarrot.samples.springbootcrudrepository.services;
 
-import com.carrot.samples.springbootcrudrepository.exceptions.ServiceClientException;
-import com.carrot.samples.springbootcrudrepository.models.UserCountResponseDto;
-import com.carrot.samples.springbootcrudrepository.models.UserDao;
-import com.carrot.samples.springbootcrudrepository.models.UserDto;
-import com.carrot.samples.springbootcrudrepository.repository.UserRepository;
+import com.iamcarrot.samples.springbootcrudrepository.exceptions.ServiceClientException;
+import com.iamcarrot.samples.springbootcrudrepository.models.UserCountResponseDto;
+import com.iamcarrot.samples.springbootcrudrepository.models.UserDao;
+import com.iamcarrot.samples.springbootcrudrepository.models.UserDto;
+import com.iamcarrot.samples.springbootcrudrepository.repository.UserRepository;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 

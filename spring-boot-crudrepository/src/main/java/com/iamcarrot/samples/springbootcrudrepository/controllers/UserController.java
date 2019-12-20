@@ -1,9 +1,9 @@
-package com.carrot.samples.springbootcrudrepository.controllers;
+package com.iamcarrot.samples.springbootcrudrepository.controllers;
 
-import com.carrot.samples.springbootcrudrepository.exceptions.ServiceClientException;
-import com.carrot.samples.springbootcrudrepository.models.UserCountResponseDto;
-import com.carrot.samples.springbootcrudrepository.models.UserDto;
-import com.carrot.samples.springbootcrudrepository.services.UserService;
+import com.iamcarrot.samples.springbootcrudrepository.exceptions.ServiceClientException;
+import com.iamcarrot.samples.springbootcrudrepository.models.UserCountResponseDto;
+import com.iamcarrot.samples.springbootcrudrepository.models.UserDto;
+import com.iamcarrot.samples.springbootcrudrepository.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

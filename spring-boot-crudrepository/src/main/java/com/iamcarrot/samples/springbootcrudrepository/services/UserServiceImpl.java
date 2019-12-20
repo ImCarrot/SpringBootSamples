@@ -140,6 +140,10 @@ public class UserServiceImpl implements UserService {
 
         userRepository.deleteById(userId);
 
+//        UserDao existingUser = userRepository.findById(userId).orElse(null);
+//        userRepository.delete(existingUser);
+
+
         return false;
     }
 }

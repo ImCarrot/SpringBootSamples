@@ -118,7 +118,7 @@ the `save` and `saveAll` method.
 ##### The Save method
 
 The reason why `save` gets a whole section is because something that got to me as well when I was in the initial stages
-with `SpringBoot`. 
+with `SpringBoot`.
 
 The `save` and `saveAll` basically works as an `upsert` (update or insert). If the object you pass in the save method
 has an `id` (annotated with the `@Id` in `MongoDB` UserDao) value, spring would understand that there seems to be 

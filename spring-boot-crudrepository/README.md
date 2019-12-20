@@ -20,7 +20,7 @@ including the most common ones like `SQL`, `MySQL`, `MongoDB`, `H2 database` and
 
 #### Project Structure:
 
-![Structure](https://github.com/ImCarrot/SpringBootSamples/raw/master/spring-boot-crudrepository/docs/ProjectStructure.png)
+![Structure](https://github.com/ImCarrot/SpringBootSamples/raw/master/spring-boot-crudrepository/docs/ProjectStructure2.png)
 
 Let's get started on the sample.
 

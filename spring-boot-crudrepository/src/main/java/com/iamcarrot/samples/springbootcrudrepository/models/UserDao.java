@@ -34,11 +34,10 @@ public class UserDao {
     }
 
     public UserDao(UserDto context) {
-        this.userId = context.getUserId();
         this.username = context.getUsername();
         this.firstName = context.getFirstName();
         this.lastName = context.getLastName();
-        this.age = context.getAge();
+        this.age = context.getAge() == null ? 0 : context.getAge();
         this.pets = context.getPets() == null ? new HashSet<>() : new HashSet<>(context.getPets());
     }
 

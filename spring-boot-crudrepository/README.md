@@ -83,6 +83,24 @@ projects and their respective auto-configurations. You can read all about them
 The `starter-parent` is how spring handles dependency management and solves a few of many problems with transitive dependencies
 [read more](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-maven-parent-pom).
 
+#### Wiring up MongoDB
+
+There are a bunch of ways to wire up MongoDb. We'll be using the MongoURI method with `spring autoconfiguration` by 
+setting the relevant properties in our `application.properties` file and let spring handle everything else.
+
+For this all you need to define is the `MongoURI` and `DBName` in your `application.properties` file. 
+
+    spring.data.mongodb.database=springCRUDSample
+    spring.data.mongodb.uri=mongodb://127.0.0.1/
+    
+but you can add all sorts of additional settings here including `username` and `password` if your DB has them.
+
+    spring.data.mongodb.database=springCRUDSample
+    spring.data.mongodb.uri=mongodb://127.0.0.1:27017/springCRUDSample?username=TestUser&password=TestPassword&socketTimeoutMS=60000
+
+read more about this [in MongoDB docs here](https://docs.mongodb.com/manual/reference/connection-string/)
+
+
 #### The Repository Class
 
 Create a new interface called `UserRepository`
@@ -333,6 +351,126 @@ user first and then delete that record by passing the instance.
         userRepository.delete(existingUser)
         return false;
     }
+
+
+#### The Controllers
+
+Now that we have the services wired up, we just need to add the controllers to actually add an accessible interface 
+so that the clients can access the functionality that we've built here (using APIs). We won't be covering the basics
+of APIs or `@RestController` in this blog post but you can lookup [Spring Boot Rest Exmple](https://java2blog.com/spring-boot-rest-example/)
+to get more information. 
+
+    @RestController
+    public class UserController {
+    
+        private final UserService userService;
+    
+        public UserController(UserService userService) {
+            this.userService = userService;
+        }
+    
+        @PostMapping("/users")
+        public ResponseEntity<?> createNewUser(@RequestBody UserDto context) {
+    
+            try {
+    
+                String userId = userService.createUser(context);
+    
+                if (userId == null)
+                    return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+    
+                return ResponseEntity.created(URI.create("http://127.0.0.1:8080/users/" + userId)).build();
+    
+            } catch (ServiceClientException e) {
+                return ResponseEntity.badRequest().header("message", e.getMessage()).build();
+            }
+        }
+    
+        @GetMapping("/users/count")
+        public ResponseEntity<?> getUsersCount() {
+    
+            UserCountResponseDto userCount = userService.userCount();
+    
+            if (userCount == null)
+                return ResponseEntity.noContent().build();
+    
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(userCount);
+        }
+    
+        @GetMapping("/users")
+        public ResponseEntity<?> getAllUsers() {
+    
+            Collection<UserDto> users = userService.getUsers();
+    
+            if (users == null || users.isEmpty())
+                return ResponseEntity.noContent().build();
+    
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(users);
+        }
+    
+        @GetMapping("/users/{userId}")
+        public ResponseEntity<?> getAllUsersById(@PathVariable("userId") String userId) {
+    
+            try {
+    
+                UserDto user = userService.getUsers(userId);
+    
+                if (user == null)
+                    ResponseEntity.noContent().build();
+    
+                return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(user);
+    
+            } catch (ServiceClientException e) {
+                return ResponseEntity.badRequest().header("message", e.getMessage()).build();
+            }
+        }
+    
+        @PutMapping("/users/{userId}")
+        public ResponseEntity<?> updateUser(@PathVariable("userId") String userId, @RequestBody UserDto context) {
+    
+            try {
+    
+                boolean wasSuccessful = userService.updateUser(userId, context);
+    
+                if (!wasSuccessful)
+                    return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+    
+                return ResponseEntity.ok().build();
+    
+            } catch (ServiceClientException e) {
+                return ResponseEntity.badRequest().header("message", e.getMessage()).build();
+            }
+        }
+    
+        @DeleteMapping("/users/{userId}")
+        public ResponseEntity<?> deleteUser(@PathVariable("userId") String userId) {
+    
+            try {
+    
+                boolean wasSuccessful = userService.deleteUser(userId);
+    
+                if (!wasSuccessful)
+                    return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+    
+                return ResponseEntity.ok().build();
+    
+    
+            } catch (ServiceClientException e) {
+                return ResponseEntity.badRequest().header("message", e.getMessage()).build();
+            }
+        }
+    } 
+
+The above is a sample snippet of the `UserController` for the complete code you can refer to the GitHub repository. 
+
+> The controller must abide to [RFC-7231](https://tools.ietf.org/html/rfc7231) that states the standards for `RESTful APIs`.
+> You can see based on the status codes and the create user 201 (with URL) response. During the `POST` call, the 
+> server must return the `URL` of the resource that was created.
+
+#### Running the code sample
+
+Now that we have everything ready, we just run our code and try out our APIs. We'll be using [postman](https://www.getpostman.com/downloads/)
+to do this
 
 #### Conclusion
 

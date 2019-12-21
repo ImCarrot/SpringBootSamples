@@ -470,7 +470,43 @@ The above is a sample snippet of the `UserController` for the complete code you 
 #### Running the code sample
 
 Now that we have everything ready, we just run our code and try out our APIs. We'll be using [postman](https://www.getpostman.com/downloads/)
-to do this
+to do this. 
+
+We'll first make the `Post` request to create the user:
+
+![](https://github.com/ImCarrot/SpringBootSamples/raw/master/spring-boot-crudrepository/docs/CreateUserCall.png)
+
+> Notice the `Response Headers` has a key called `Location` that is Spring doing its work
+>for obeying `RFC-7231` based on the URL we added in the `ResponseEntity.created("URL")`
+
+Let's take a look at the DB now, for DB I like to use a tool called [Mongo Compass](https://www.mongodb.com/download-center/compass)
+instead of the Terminal, just makes this easier. 
+
+![](https://github.com/ImCarrot/SpringBootSamples/raw/master/spring-boot-crudrepository/docs/DbSample.png)
+
+> The pets and age are basically extra fields I added up. Notice how our `userId` is stored as 
+>`ObjectId("OurID")` and the actual field name is `_id` even though in our model class 
+> it was `userId` that's the `@Id` doing it's job.
+
+Let's try to fetch the User information now: 
+
+![](https://github.com/ImCarrot/SpringBootSamples/raw/master/spring-boot-crudrepository/docs/GetUserCall.png)
+
+and there you have it. 
+
+There are other endpoints registered too and you can call them similarly
+
+| Endpoint        | Method Type | Description  |
+| ----------------|:------:| :---------------|
+| /users/count    | GET    | to fetch the number of users registered |
+| /users          | GET    | to fetch all users registered |
+| /users/{userId} | PUT    | to update the data of a user |
+| /users/{userId} | DELETE | to delete a user |
+
+> Careful about the `GET /users` call though imagine you have 1 million users, would you 
+>want to return all of them in a single call? Wouldn't that be a bit too much for the 
+>server to handle? To solve this there is Pagination that I would cover in another 
+>blog post as it's out of scope for this blog post. 
 
 #### Conclusion
 
